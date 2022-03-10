@@ -1,6 +1,5 @@
 # movies-explorer-frontend
-http://51.250.27.119/
+
+https://disk.yandex.ru/d/nHaRfDDs5eKCNA
 
 http://www.myfilmsdb.cf/
-
-http://myfilmsdb.cf/
