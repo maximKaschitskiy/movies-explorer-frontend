@@ -1,0 +1,76 @@
+.search {
+  background-color: #202020;
+  padding-top: 30px;
+}
+
+.search__form {
+  display: flex;
+  width: 500px;
+  height: max-content;
+  padding: 4px;
+  padding-left: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #2F2F2F;
+  border-radius: 50px;
+}
+
+@media only screen and (max-width: 320px) {
+	.search__form {
+    width: 91.25%;
+  }
+ }
+
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+	.search__form {
+    width: calc(92.85% - 5px);
+  }
+ }
+
+@media only screen and (min-width: 769px) and (max-width: 1280px) {
+	.search__form {
+    width: calc(84.37% + 60px);
+  }
+ }
+ 
+@media only screen and (min-width: 1281px) {
+	.search__form {
+    width: 89.06%;
+  }
+ }
+
+.search__input {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  outline: none;
+}
+
+.search__input::placeholder {
+  color: #A0A0A0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.search__input-button {
+  background: url("../../../images/find-button.svg") no-repeat;
+  background-size: contain;
+  background-position: center center;
+  width: 80px;
+  height: 34px;
+  background-color: #4285F4;
+  border-style: none;
+  border-radius: 50px;
+  cursor: pointer;
+  outline: none;
+  transition: opacity .3s ease-in-out .3s;
+}
+
+.search__input-button:hover {
+  opacity: .7;
+}
