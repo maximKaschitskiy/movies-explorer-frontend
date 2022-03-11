@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
   useNavigate
-} from "react-router";
+} from "react-router-dom";
 
 import Header from "../Header/Header";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
