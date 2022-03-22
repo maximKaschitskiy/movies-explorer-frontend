@@ -1,21 +1,56 @@
 .portfolio-title {
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 22px;
   font-weight: 400;
-  margin: 0;
-  border-bottom: 1px solid #FFFFFF;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-@media screen and (min-width: 717px) {
+.portfolio-title::after {
+  content:'';
+  width: 100%;
+  border-bottom: 1px solid #DADADA;
+  margin-top: 23px;
+  display: block;
+}
+
+@media only screen and (max-width: 320px) {
+  .portfolio-title::after {
+    margin-top: 28px;
+  }
+  .portfolio-title {
+    font-size: 18px;
+    line-height: auto;
+  }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+  .portfolio-title::after {
+    margin-top: 23px;
+  }
   .portfolio-title {
     font-size: 22px;
-    line-height: 26px;
+    line-height: 22px;
   }
-}
+ }
 
-@media screen and (min-width: 1000px) {
-  .portfolio-title {
-    padding-top: 100px;
+@media only screen and (min-width: 769px) and (max-width: 1280px) {
+  .portfolio-title::after {
+    margin-top: 23px;
   }
-}
+  .portfolio-title {
+    font-size: 22px;
+    line-height: 22px;
+  }
+ }
+ 
+@media only screen and (min-width: 1281px) {
+  .portfolio-title::after {
+    margin-top: 23px;
+  }
+  .portfolio-title {
+    font-size: 22px;
+    line-height: 22px;
+  }
+ }

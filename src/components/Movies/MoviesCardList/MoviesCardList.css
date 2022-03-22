@@ -15,13 +15,14 @@
 .movies-card-list__load-button {
   margin-top: 40px;
   padding: 11px 20px 9px;
-  background: #ffffff;
-  border: 1px solid #E8E8E8;
+  background: #2F2F2F;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   font-size: 12px;
   line-height: 14px;
+  color: #FFFFFF;
   transition: all .2s ease-in-out .2s;
 }
 

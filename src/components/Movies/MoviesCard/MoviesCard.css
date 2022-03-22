@@ -1,6 +1,6 @@
 .movie-card {
   color: #000000;
-  max-width: 360px;
+  max-width: max-content;
   max-height: 319px;
 }
 
@@ -48,8 +48,6 @@
 }
 
 .movie-card__image {
-  max-width: 360px;
-  max-height: 200px;
   width: 100%;
   height: 100%;
 }
@@ -61,14 +59,23 @@
   height: 24px;
   width: 24px;
   background: url("../../../images/like-icon-disable.svg") #313131 no-repeat center;
-  transition: opacity, background-color .1s ease-in-out .1s;
+  transition: opacity .1s ease-in-out .1s;
 }
 
-.movie-card__button_type_remove-bookmark {
+.movie-card__button_type_active-bookmark {
   background: url("../../../images/like-icon-active.svg") #313131 no-repeat center;
 }
 
+.movie-card__button_type_remove-bookmark {
+  background: url("../../../images/like-icon-delete.svg") #313131 no-repeat center;
+  visibility: hidden;
+  transition: all .2s ease-in-out .2s;
+}
+
 .movie-card__button:hover {
-  background-color: #E8E8E8;
-  opacity: .7;
+  background-color: #505050;
+}
+
+.movie-card:hover .movie-card__button_type_remove-bookmark{
+  visibility: visible;
 }

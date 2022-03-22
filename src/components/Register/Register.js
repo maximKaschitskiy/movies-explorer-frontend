@@ -4,20 +4,41 @@ import './Register.css';
 import logo from "../../images/logo.svg";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
+import { Link } from 'react-router-dom';
 
-function Register() {
+function Register({onLoad, onSubmit}) {
+
+  const [inputField, setInputField] = React.useState({})
+
+  React.useEffect(() => {
+    setInputField({});
+  }, []);
+
+const handleChange = (event) =>{
+    setInputField( { ...inputField,
+      [event.target.name]: event.target.value
+    } );
+  }
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(inputField);
+}
+  
   return(
     <div className="register">
       <div className="register__wrapper">
-      <a className="register__main-link" href="#">
+      <Link className="register__main-link" to={"/"}>
         <img src={logo} alt="Логотип Movie Explorer" className="register__logo"/>
-      </a>
+      </Link>
       <h2 className="register__title">Добро пожаловать!</h2>
       <Form
         buttonText="Зарегистрироваться"
         text="Уже зарегистрированы?"
         url="/signin"
         linkText="Войти"
+        onSubmit={handleSubmit}
+        formClassName="form_state_register"
       >
         <Input
           id="user-name"
@@ -27,6 +48,10 @@ function Register() {
           minLength="2"
           maxLength="20"
           errorText=""
+          value={inputField.name || ""}
+          onChange={(event)=>{handleChange(event)}}
+          inputClassName="input__field_state_user-name"
+          placeholder="Введите имя"
         />
         <Input
           id="user-email"
@@ -35,7 +60,10 @@ function Register() {
           inputTitle="E-mail"
           minLength="7"
           maxLength="200"
-          errorText="Что-то пошло не так..."
+          value={inputField.email || ""}
+          onChange={(event)=>{handleChange(event)}}
+          inputClassName="input__field_state_user-email"
+          placeholder="Введите e-mail"
         />
         <Input
           id="user-password"
@@ -44,7 +72,10 @@ function Register() {
           inputTitle="Пароль"
           minLength="8"
           maxLength="200"
-          errorText="Что-то пошло не так..."
+          value={inputField.password || ""}
+          onChange={(event)=>{handleChange(event)}}
+          inputClassName="input__field_state_user-password"
+          placeholder="Введите пароль"
         />
       </Form>
     </div>

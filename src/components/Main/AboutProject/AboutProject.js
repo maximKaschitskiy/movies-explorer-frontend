@@ -6,6 +6,7 @@ import PortfolioTitle from "../../PortfolioTitle/PortfolioTitle";
 function AboutProject() {
   return(
     <section className="about-project" id="about-project">
+      <div className="about-project__wrapper">
       <PortfolioTitle title="О проекте" />
       <ul className="about-project__content">
         <li className="about-project__content-item">
@@ -24,6 +25,7 @@ function AboutProject() {
         <div className="progress-bar__element progress-bar__element_color_grey">4 недели</div>
         <p className="progress-bar__element-description">Back-end</p>
         <p className="progress-bar__element-description">Front-end</p>
+      </div>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.register__wrapper{
+.register__wrapper {
   color: #FFFFFF;
   align-self: center;
   text-align: center;
@@ -39,3 +39,13 @@
   font-size: 24px;
   line-height: 29px;
 }
+
+
+@media only screen and (max-width: 435px) {
+  .register__main-link {
+    align-self: center;
+  }
+	.register__wrapper {
+    width: 91.25%;
+  }
+ }

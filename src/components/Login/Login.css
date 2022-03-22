@@ -8,7 +8,7 @@
     justify-content: center;
   }
 
-.login__wrapper{
+.login__wrapper {
     color: #FFFFFF;
     align-self: center;
     text-align: center;
@@ -37,5 +37,20 @@
     width: 100%;
     font-weight: 500;
     font-size: 24px;
-    line-height: 29px;
+    line-height: auto;
+    text-align: start;
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
+
+@media only screen and (max-width: 435px) {
+  .login__main-link {
+      align-self: center;
+    }
+  .login__wrapper {
+      width: 91.25%;
+    }
+  .login__title {
+    text-align: center;
+  }
+}

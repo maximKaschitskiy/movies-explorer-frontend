@@ -16,7 +16,7 @@
 
 .input__field {
   border: none;
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: 1px solid #424242;
   padding-bottom: 10px;
   outline: none;
   font-weight: 400;
@@ -24,29 +24,41 @@
   line-height: 17px;
   background: transparent;
   color: #E8E8E8;
+  -webkit-box-shadow: inset 0 0 0 50px #202020;
+  -webkit-text-fill-color: #FFFFFF;
 }
 
 .input__field:focus {
   border-bottom: 1px solid #4285F4;
 }
 
+.input__field::placeholder {
+  color: #424242;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+}
+
 .input__field_state_error {
   color: #EE3465;
+  -webkit-text-fill-color: #EE3465;
 }
 
 .input__field_state_error:focus {
-  border-bottom: 1px solid #EE3465;
+  border-bottom: 1px solid #424242;
 }
 
 .input__error {
-  display: none;
+  display: block;
   padding-top: 6px;
   color: #EE3465;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
+  visibility: hidden;
+  height: 10px;
 }
 
 .input__error_visible {
-  display: block;
+  visibility: visible;
 }

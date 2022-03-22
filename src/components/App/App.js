@@ -15,10 +15,25 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Footer from "../Footer/Footer";
 
+import { FormValidator, formSelectorsObj } from "../../utils/FormValidator";
+
 import "./App.css";
 
 
 function App() {
+
+  const validateEditProfileForm = new FormValidator(formSelectorsObj, formSelectorsObj.loginFormSelector);
+  const validateAddPlaceForm = new FormValidator(formSelectorsObj, formSelectorsObj.registerFormSelector);
+
+
+
+  React.useEffect(() => {
+    validateEditProfileForm.enableValidation();
+    validateAddPlaceForm.enableValidation();
+  }, []);
+
+
+  document.documentElement.lang = 'ru';
 
   const [loggedIn, setLoggedIn] = useState(true);
 
@@ -40,13 +55,21 @@ function App() {
     }
   }
 
+  function handleRegisterSubmit(event) {
+    console.log(event);
+  }
+
+  function handleLoginSubmit(event) {
+    console.log(event);
+  }
+
   return (
     <React.StrictMode>
         <div className="page">
               <Routes>
                 <Route path="*" element={<NotFoundPage />} />
-                <Route path="/sign-up" element={<Register />} />
-                <Route path="/sign-in" element={<Login />} />
+                <Route path="/sign-up" element={<Register onSubmit={handleRegisterSubmit} />} />
+                <Route path="/sign-in" element={<Login onSubmit={handleLoginSubmit} />} />
                 <Route path="/" element={[
                   <Header
                     loggedIn={true}

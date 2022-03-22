@@ -20,7 +20,6 @@ function MovieCard({ movieImage, isBookmarkPage, keyIndex }) {
         <figcaption className="movie-card__info">
           <h3 className="movie-card__title">Заголовок</h3>
           <button className={`movie-card__button
-                ${isInBookmark && "movie-card__button_type_in-bookmark"}
                 ${isBookmarkPage && "movie-card__button_type_remove-bookmark"}`}
                 onClick={handleAddBookmark}>
           </button>

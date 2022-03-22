@@ -5,20 +5,41 @@ import './Login.css';
 import logo from "../../images/logo.svg";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
+import { Link } from 'react-router-dom';
 
-function Login() {
+function Login({onLoad, onSubmit}) {
+
+  const [inputField, setInputField] = React.useState({})
+
+  React.useEffect(() => {
+    setInputField({});
+  }, []);
+
+const handleChange = (event) =>{
+    setInputField( { ...inputField,
+      [event.target.name]: event.target.value
+    } );
+  }
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(inputField);
+}
+
   return(
     <div className="login">
       <div className="login__wrapper">
-      <a className="login__main-link" href="#">
-        <img src={logo} alt="Логотип Movie Explorer" className="login__logo"/>
-      </a>
+      <Link className="register__main-link" to={"/"}>
+        <img src={logo} alt="Логотип Movie Explorer" className="register__logo"/>
+      </Link>
       <h2 className="login__title">Рады видеть!</h2>
       <Form
         buttonText="Войти"
         text="Еще не зарегистрированы?"
         url="/signup"
         linkText="Регистрация"
+        onSubmit={handleSubmit}
+        formClassName="form_state_login"
       >
         <Input
           id="user-email"
@@ -28,6 +49,10 @@ function Login() {
           minLength="7"
           maxLength="200"
           errorText=""
+          value={inputField.email || ""}
+          onChange={(event)=>{handleChange(event)}}
+          inputClassName="input__field_state_user-email"
+          placeholder="Введите e-mail"
         />
         <Input
           id="user-password"
@@ -36,7 +61,10 @@ function Login() {
           inputTitle="Пароль"
           minLength="8"
           maxLength="200"
-          errorText="Что-то пошло не так..."
+          value={inputField.password || ""}
+          onChange={(event)=>{handleChange(event)}}
+          inputClassName="input__field_state_user-password"
+          placeholder="Введите пароль"
         />
       </Form>
     </div>

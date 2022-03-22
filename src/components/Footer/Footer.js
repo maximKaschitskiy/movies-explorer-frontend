@@ -8,7 +8,7 @@ function Footer({ moviesPage }) {
     <footer className={`footer ${moviesPage && 'footer__movies-media'}`}>
       <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
       <div className="footer__wrapper">
-        <div className="footer__links-wrapper">
+          <p className="footer__copyright">&copy; 2022</p>
           <ul className="footer__links">
             <li className="footer__item">
               <a href="https://praktikum.yandex.ru/" className="footer__item-link"
@@ -28,8 +28,6 @@ function Footer({ moviesPage }) {
             </li>
           </ul>
         </div>
-        <p className="footer__copyright">&copy; 2022</p>
-      </div>
     </footer>
   );
 }
