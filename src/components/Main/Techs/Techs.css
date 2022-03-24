@@ -59,6 +59,10 @@
 }
 
 @media only screen and (max-width: 320px) {
+  .techs {
+    background-color: #202020;
+  }
+
 	.techs__wrapper {
     width: 91.25%;
     padding-top: 70px;
@@ -99,7 +103,7 @@
     margin-top: 83px;
   }
   .techs__title {
-    font-size: 50px;
+    font-size: calc(4.46vw + 15px);
     line-height: 58px;
     margin-top: 80px;
     width: 100%;
