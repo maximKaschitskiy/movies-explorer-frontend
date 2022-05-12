@@ -131,7 +131,7 @@ class MainApi {
   }
 }
 
-const baseUrl = "http://localhost:3001";
+const baseUrl = "http://api.myfilmsdb.cf";
 
 const mainApi = new MainApi(baseUrl);
 export default mainApi;
