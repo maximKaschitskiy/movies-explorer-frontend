@@ -1,14 +1,17 @@
 .movie-card {
   color: #000000;
-  max-width: max-content;
-  max-height: 319px;
-}
-
-.movie-card__content {
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
+}
+
+.movie-card__image {
+  width: 100%;
+  height: 151px;
+  object-fit: cover;
+}
+
+.movie-card__link {
+  display: flex;
 }
 
 .movie-card__info {
@@ -18,6 +21,8 @@
   align-items: center;
   margin-top: 18px;
   margin-bottom: 38px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .movie-card__title {
@@ -26,6 +31,10 @@
   line-height: 16px;
   color: #FFFFFF;
   margin: 0;
+  width: 80%;
+  height: 32px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .movie-card__duration {
@@ -45,11 +54,6 @@
   margin-top: 13px;
   margin-bottom: 10px;
   display: block;
-}
-
-.movie-card__image {
-  width: 100%;
-  height: 100%;
 }
 
 .movie-card__button {
@@ -72,6 +76,10 @@
   transition: all .2s ease-in-out .2s;
 }
 
+.movie-card__button_type_loading {
+  animation: heart 0.75s ease-in-out infinite;
+}
+
 .movie-card__button:hover {
   background-color: #505050;
 }
@@ -79,3 +87,27 @@
 .movie-card:hover .movie-card__button_type_remove-bookmark{
   visibility: visible;
 }
+
+@media only screen and (max-width: 420px) {
+  .movie-card__image {
+
+  }
+}
+
+@media only screen and (min-width: 421px) and (max-width: 600px) {
+  .movie-card__image {
+
+  }
+ }
+
+@media only screen and (min-width: 601px) and (max-width: 1280px) {
+  .movie-card__image {
+    
+  }
+ }
+ 
+@media only screen and (min-width: 1281px) {
+  .movie-card__image {
+    
+  }
+ }

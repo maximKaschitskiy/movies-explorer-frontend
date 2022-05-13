@@ -1,26 +1,44 @@
 .profile {
-  color: #000000;
-  background-color: #ffffff;
-  box-sizing: border-box;
+  color: #FFFFFF;
+  text-align: center;
+  background-color: #202020;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.profile__wrapper {
+  color: #FFFFFF;
+  align-self: center;
+  text-align: center;
+  background-color: #202020;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  align-items: center;
+  width: 396px;
 }
 
 .account__title {
-  text-align: center;
-  padding: 70px 0 0;
-  margin: 0 auto;
+  width: 100%;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
 }
 
 .profile__form {
-  padding: calc(80px - 17px) 30px calc(40px - 16px);
-  max-width: 410px;
-  margin: 0 auto;
+  padding-bottom: 30px;
+  max-width: 396px;
+  width: 100%;
 }
 
 .profile__field-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 17px 0 16px;
-  border-top: 1px solid #E8E8E8;
+  border-top: 1px solid #424242;
 }
 
 .profile__field-wrapper:first-child {
@@ -35,13 +53,32 @@
 
 .profile__input {
   text-align: end;
-  background: transparent;
   border: none;
-
+  color: white;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
+  width: 70%;
+  background: transparent;
+  -webkit-box-shadow: inset 0 0 0 50px #202020;
+  -webkit-text-fill-color: #FFFFFF;
 }
+
+.profile__input:-webkit-autofill {
+  font-size: 11px;
+}
+
+.profile__input:autofill {
+  font-size: 11px;
+}
+
+.profile__input:focus {
+  outline: none;
+}
+
+.profile__field-wrapper:focus-within {
+  border-bottom: 1px solid #4285F4;
+ }
 
 .profile__form-actions {
   padding-top: 379px;
@@ -54,6 +91,7 @@
 }
 
 .profile__action-button {
+  color: white;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -61,7 +99,6 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
-
   transition: opacity .3s ease-in-out .3s;
 }
 

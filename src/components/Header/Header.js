@@ -5,8 +5,11 @@ import logo from '../../images/logo.svg';
 import profileIcon from '../../images/profile-icon.svg';
 import './Header.css';
 import Navigation from "../Navigation/Navigation";
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive, loggedIn }) {
+
+  const [currentUser] = React.useContext(CurrentUserContext);
 
   return(
     <header className={`header ${isProfilePageActive && "header__theme_white"} ${loggedIn && "header_type_logged-in"}`}>
@@ -25,7 +28,7 @@ function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive, logged
             </div>
             <Link to={"/profile"} href="#" className="navigation__account">
               <span href="#" className="navigation__account-caption" onClick={closeMenu}>
-                Аккаунт
+                {currentUser.name}
               </span>
               <img className="navigation__account-icon" src={profileIcon}></img>
             </Link>

@@ -15,7 +15,7 @@ function Login({onLoad, onSubmit}) {
     setInputField({});
   }, []);
 
-const handleChange = (event) =>{
+const handleChange = (event) => {
     setInputField( { ...inputField,
       [event.target.name]: event.target.value
     } );
@@ -40,6 +40,7 @@ const handleSubmit = (event) => {
         linkText="Регистрация"
         onSubmit={handleSubmit}
         formClassName="form_state_login"
+        bottomLink="/sign-up"
       >
         <Input
           id="user-email"
@@ -65,6 +66,7 @@ const handleSubmit = (event) => {
           onChange={(event)=>{handleChange(event)}}
           inputClassName="input__field_state_user-password"
           placeholder="Введите пароль"
+          autoComplete={"on"}
         />
       </Form>
     </div>

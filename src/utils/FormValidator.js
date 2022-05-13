@@ -1,19 +1,19 @@
 const formSelectorsObj = {
   formSelector: '.form', //<form>
-  inputSelector: '.input__field', //<input>
   fieldsetSelector: '.fieldset', //<fieldset>
+  inputSelector: '.input__field', //<input>
   buttonSelector: '.form__button', //<button>
   validationErrorSelector: 'input__field_state_error', //<input>
 
   requiredForms: { //<input>
-      fieldNameSelector: 'input__field_state_user-email',
+      fieldEmailSelector: 'input__field_state_user-email',
       fieldStatusSelector: 'input__field_state_user-password',
-      fieldStatusSelector: 'input__field_state_user-name',
-      fieldStatusSelector: 'input__field_state_user-password',
+      fieldNameSelector: 'input__field_state_user-name',
   },
 
   loginFormSelector: '.form_state_login', //<form>
   registerFormSelector: '.form_state_register', //<form>
+  profileFormSelector: '.profile__form', //<form>
 }
   
   class FormValidator {
@@ -24,12 +24,6 @@ const formSelectorsObj = {
         this._fieldsetSelector = selectors.fieldsetSelector;
         this._buttonSelector = selectors.buttonSelector;
         this._validationErrorSelector = selectors.validationErrorSelector;
-
-        this._fieldNameSelector = selectors.fieldNameSelector;
-        this._fieldStatusSelector = selectors.fieldStatusSelector;
-
-        this._editProfileFormSelector = selectors.editProfileFormSelector;
-        this._addPlaceFormSelector = selectors.addPlaceFormSelector
 
         this._currentForm = currentForm;
     };
@@ -108,12 +102,19 @@ const formSelectorsObj = {
         });
     };
   
-    resetErrors(formElement) {
-      const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
-      inputList.forEach((inputElement) => {
-        this._hideInputError(inputElement);
+    resetErrors() {
+      const formList = Array.from(document.querySelectorAll(this._currentForm));
+      formList.forEach((formElement) => {
+        const buttonElement = formElement.querySelector(this._buttonSelector);
+        buttonElement.disabled = true;
+          const fieldsetList = Array.from(formElement.querySelectorAll(this._fieldsetSelector));
+          fieldsetList.forEach((fieldSet) => {
+            const inputList = Array.from(fieldSet.querySelectorAll(this._inputSelector));
+            inputList.forEach((inputElement) => {
+              this._hideInputError(formElement, inputElement);
+            });
+          });
       });
-      this._disableBtn()
     }
   }
   

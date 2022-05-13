@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Input.css';
 
-function Input({ type, id, inputTitle, name, minLength, maxLength, errorText, value, onChange, inputClassName, placeholder }) {
+function Input({ type, id, inputTitle, name, minLength, maxLength, errorText, value, onChange, inputClassName, placeholder, autoComplete }) {
   return(
     <div className="input">
       <label className="input__label">{inputTitle}</label>
@@ -17,6 +17,7 @@ function Input({ type, id, inputTitle, name, minLength, maxLength, errorText, va
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        autoComplete={autoComplete}
       />
       <span className={`input__error input__error_visible ${id}-error`}></span>
     </div>

@@ -1,18 +1,44 @@
-import React from 'react';
+import React from "react";
 
-import './Movies.css';
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import "./Movies.css";
 import Search from "./Search/Search";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage, loggedIn }) {
-  return(
+function Movies({
+  movies,
+  visibleMovies,
+  savedMovies,
+  savedMoviesId,
+  menuIsOpened,
+  openMenu,
+  closeMenu,
+  isBookmarkPage,
+  loggedIn,
+  onSubmit,
+  handleMoreClick,
+  handleLikeClick,
+  handleDeleteClick,
+  isFilterOn,
+  setIsFilterOn,
+})
+
+{
+
+  return (
     <section className="movies">
-      <Search />
-      <FilterCheckbox checkboxName={'Короткометражки'}/>
-      <MoviesCardList isBookmarkPage={isBookmarkPage}/>
+      <Search onSubmit={onSubmit} />
+      <FilterCheckbox checkboxName={"Короткометражки"} isFilterOn={isFilterOn} setIsFilterOn={setIsFilterOn}/>
+      <MoviesCardList
+        movies={movies}
+        visibleMovies={visibleMovies}
+        savedMovies={savedMovies}
+        isBookmarkPage={isBookmarkPage}
+        handleMoreClick={handleMoreClick}
+        handleLikeClick={handleLikeClick}
+        handleDeleteClick={handleDeleteClick}
+        savedMoviesId={savedMoviesId}
+      />
     </section>
   );
 }

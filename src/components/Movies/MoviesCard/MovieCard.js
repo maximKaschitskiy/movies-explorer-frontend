@@ -1,32 +1,92 @@
-import React, {useState} from 'react';
+import React from "react";
 
-import './MoviesCard.css';
+import { useLocation } from "react-router-dom";
 
-import likeActive from '../../../images/like-icon-active.svg';
-import likeDisable from '../../../images/like-icon-disable.svg';
+import "./MoviesCard.css";
 
-function MovieCard({ movieImage, isBookmarkPage, keyIndex }) {
+function MovieCard({
+  movieId,
+  duration,
+  savedMovies,
+  savedMoviesId,
+  trailerLink,
+  country,
+  director,
+  year,
+  description,
+  image,
+  nameRU,
+  nameEN,
+  thumbnail,
+  providedDuration,
+  handleLikeClick,
+  handleDeleteClick,
+  isBookmarkPage,
+}) {
 
-  const [isInBookmark, setIsInBookmark] = useState(false);
+  const location = useLocation();
 
-  function handleAddBookmark() {
-    setIsInBookmark(!isInBookmark);
+  const movieData = {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+  };
+
+  const handleIsLiked = (movieData, savedMoviesId) => {
+    if (movieData.movieId && savedMoviesId) {
+      return savedMoviesId.some(item => item === movieData.movieId);
+    }
   }
 
-  return(
-    <article className="movie-card" key={keyIndex}>
-      <figure className="movie-card__content">
-        <img src={movieImage} className="movie-card__image" alt="В погоне за Бэнкси"/>
-        <figcaption className="movie-card__info">
-          <h3 className="movie-card__title">Заголовок</h3>
-          <button className={`movie-card__button
-                ${isBookmarkPage && "movie-card__button_type_remove-bookmark"}`}
-                onClick={handleAddBookmark}>
-          </button>
-          <p className="movie-card__duration">1ч 42м</p>
-        </figcaption>
-      </figure>
-    </article>
+  const isLiked = handleIsLiked(movieData, savedMoviesId);
+
+  const savedMovie = savedMovies.find(item => item.movieId === movieId);
+
+  const cardStatus = () => {
+    if (isLiked && location.pathname === "/movies") {
+      return "movie-card__button_type_active-bookmark"
+    }
+    if (isLiked && location.pathname !== "/movies") {
+      return "movie-card__button_type_remove-bookmark"
+    }
+  }
+
+  // Обработчики лайка и удаления фильма
+  const handleLikeMovie = () =>
+    isLiked ? handleDeleteClick(savedMovie) : handleLikeClick(movieData);
+
+  const handleDeleteMovie = () => handleDeleteClick(savedMovie);
+
+  return (
+    <li className="movie-card" key={movieData.movieId}>
+      <a href={trailerLink} className="movie-card__link" target="_blank" rel="noopener noreferrer">
+        <img
+          src={movieData.image}
+          className="movie-card__image"
+          alt={nameRU}
+        />
+      </a>
+      <div className="movie-card__info">
+        <h3 className="movie-card__title">{nameRU}</h3>
+        <button
+          className={
+            `movie-card__button ${cardStatus()}`
+          }
+          onClick={
+            isLiked ? () => handleDeleteMovie() : () => handleLikeMovie()
+          }>
+        </button>
+        <p className="movie-card__duration">{providedDuration}</p>
+      </div>
+    </li>
   );
 }
 
