@@ -20,6 +20,7 @@ class MainApi {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "true",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         email: values.email,
@@ -35,6 +36,7 @@ class MainApi {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "true",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         password: values.password,
@@ -50,6 +52,7 @@ class MainApi {
         "Content-Type": "application/json",
         Authorization: `Bearer ${values}`,
         "Access-Control-Allow-Credentials": "true",
+        Accept: "application/json",
       },
     }).then(this._checkResponse.bind(this));
   }
@@ -132,7 +135,7 @@ class MainApi {
 }
 
 //const baseUrl = "http://localhost:3001";
-const baseUrl = "http://api.myfilmsdb.cf";
+const baseUrl = "https://api.myfilmsdb.cf";
 
 const mainApi = new MainApi(baseUrl);
 export default mainApi;

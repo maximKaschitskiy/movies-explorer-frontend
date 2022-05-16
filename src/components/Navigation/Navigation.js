@@ -23,7 +23,7 @@ function Navigation({ menuIsOpened, closeMenu }) {
           <span className="navigation__account-caption" onClick={closeMenu}>
             Аккаунт
           </span>
-          <img className="navigation__account-icon" src={profileIcon}></img>
+          <img className="navigation__account-icon" src={profileIcon} alt="Иконка аккаунта"></img>
         </Link>
       </nav>
       <div className="navigation__close-button" onClick={closeMenu}/>

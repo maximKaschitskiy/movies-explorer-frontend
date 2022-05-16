@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import { useRef } from 'react';
 
 import "./FilterCheckbox.css";
 

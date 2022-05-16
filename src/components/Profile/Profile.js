@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import "./Profile.css";
-import Header from "../Header/Header";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Preloader from "../Preloader/Preloader";
 

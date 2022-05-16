@@ -19,7 +19,6 @@ import mainApi from "../../utils/MainApi";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import {
   loginFail,
-  failText,
   somethingWrong,
   registerFail,
   registerSuccsess
@@ -37,7 +36,6 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState();
   const [menuIsOpened, setMenuIsOpened] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
-  const [changeProfileBtn, setChangeProfileBtn] = React.useState(false);
   const [isFilterOn, setIsFilterOn] = React.useState(false);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
   const [filteredDurationMovies, setFilteredDurationMovies] = React.useState(
@@ -46,15 +44,11 @@ function App() {
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = React.useState([]);
   const [savedDurationMovies, setSavedDurationMovies] = React.useState([]);
-  const [isTooltipOpened, setIsTooltipOpened] = React.useState(false);
   const [onLoad, setOnload] = React.useState(false);
   const [isEntranceFail, setIsEntranceFail] = React.useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
-  const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
   const [savedMoviesId, setSavedMoviesId] = React.useState([]);
-  const [isMoviesLoadError, setIsMoviesLoadError] = React.useState(false);
-  const [isSearchRun, setIsSearchRun] = React.useState(false);
   const [tooltipStatus, setTooltipStatus] = React.useState({});
 
   const validateLoginForm = new FormValidator(
@@ -77,14 +71,6 @@ function App() {
     validateLoginForm.enableValidation();
     validateRegisterForm.enableValidation();
   }, [location.pathname]);
-
-  const handleMoviesError = () => {
-    setTooltipStatus({
-      text: "Нужно ввести ключевое слово",
-      iconType: "fail",
-    });
-    setIsTooltipOpened(true);
-  };
 
   document.documentElement.lang = "ru";
 
@@ -142,7 +128,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err.status, err.statusText);
         if (err.status === 401) {
           setTooltipStatus(loginFail);
         } else {
@@ -309,7 +294,6 @@ function App() {
     mainApi
       .addSavedMovie(movieData)
       .then((res) => {
-        const newSavedMovies = [res, ...savedMovies];
         setSavedMovies((prevState) => [res, ...prevState]);
       })
       .catch((err) => {
@@ -369,37 +353,24 @@ function App() {
     closePopups();
   }
 
-  function resetValidation() {
-    validateLoginForm.resetErrors();
-    validateRegisterForm.resetErrors();
-  }
-
   // чекбокс
   React.useEffect(() => {
     if (isFilterOn && location.pathname === "/movies") {
       if (movies.length > 0) {
         const result = handleDurationFilter(filteredMovies);
-        if (result.length > 0) setIsMoviesLoadError(false);
-        else if (isSearchRun) {
-          setIsMoviesLoadError(404);
-        }
         setFilteredDurationMovies(result);
-      } else if (!isSearchRun) setIsMoviesLoadError(false);
+      }
     }
     if (isFilterOn && location.pathname === "/saved-movies") {
       const result = handleDurationFilter(filteredSavedMovies);
       if (savedMovies.length > 0) {
-        if (result.length > 0) setIsMoviesLoadError(false);
-        else setIsMoviesLoadError(404);
         setSavedDurationMovies(result);
-      } else if (!isSearchRun) setIsMoviesLoadError(false);
+      }
     }
     if (!isFilterOn) {
       setSavedMovies(savedMovies);
       setMovies(movies);
       setFilteredMovies(filteredMovies);
-      if (filteredMovies.length > 0) setIsMoviesLoadError(false);
-      if (filteredSavedMovies.length > 0) setIsMoviesLoadError(false);
     }
   }, [isFilterOn]);
 
@@ -423,11 +394,6 @@ function App() {
           .then((data) => {
             const result = handleFilter(data, values.searchKeywords);
             const resultWithDuration = handleDurationFilter(result);
-            if (result.length > 0 || resultWithDuration > 0) {
-              setIsMoviesLoadError(false);
-            } else {
-              setIsMoviesLoadError(404);
-            }
             setFilteredMovies(result);
             setFilteredDurationMovies(resultWithDuration);
           })
@@ -455,15 +421,6 @@ function App() {
             );
             const searchedSavedMoviesWithDuration =
               handleDurationFilter(searchedSavedMovies);
-
-            if (
-              searchedSavedMovies.length > 0 ||
-              searchedSavedMoviesWithDuration > 0
-            ) {
-              setIsMoviesLoadError(false);
-            } else {
-              setIsMoviesLoadError(404);
-            }
             setFilteredSavedMovies(searchedSavedMovies);
             setSavedDurationMovies(searchedSavedMoviesWithDuration);
           })
@@ -540,7 +497,6 @@ function App() {
                     />
                     <Movies
                       onSubmit={handleSearchSubmit}
-                      onError={handleMoviesError}
                       visibleMovies={
                         isFilterOn ? visibleDurationMovies : visibleMovies
                       }

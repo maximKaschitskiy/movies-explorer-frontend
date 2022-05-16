@@ -30,7 +30,7 @@ function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive, logged
               <span href="#" className="navigation__account-caption" onClick={closeMenu}>
                 {currentUser.name}
               </span>
-              <img className="navigation__account-icon" src={profileIcon}></img>
+              <img className="navigation__account-icon" src={profileIcon} alt="Иконка аккаунта"></img>
             </Link>
             <button className={`header__button-burger ${!isProfilePageActive && "header__button-burger_white"}`} onClick={openMenu}/>
             <Navigation menuIsOpened={menuIsOpened} closeMenu={closeMenu}/>

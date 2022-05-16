@@ -6,8 +6,6 @@ import { movieDuration } from "../../../constants/config";
 import "./MoviesCardList.css";
 import MovieCard from "../MoviesCard/MovieCard";
 
-import moviePreview from "../../../images/movie-preview.png";
-
 function MoviesCardList({
   isSavedMovies,
   movies,
@@ -51,7 +49,6 @@ function MoviesCardList({
                   description={item.description}
                   nameEN={item.nameEN || "null"}
                   thumbnail={`https://api.nomoreparties.co${item.image.formats.thumbnail.url}`}
-                  savedMovies={savedMovies}
                   duration={item.duration}
                   movies={movies}
                 />
@@ -98,7 +95,6 @@ function MoviesCardList({
             description={item.description}
             nameEN={item.nameEN || "null"}
             thumbnail={item.thumbnail}
-            savedMovies={savedMovies}
             duration={item.duration}
             movies={movies}
           />

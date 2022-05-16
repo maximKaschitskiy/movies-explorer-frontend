@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
 
 import succsessIcon from '../../images/success.svg'
 import failIcon from '../../images/fail.svg'

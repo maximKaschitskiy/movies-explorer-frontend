@@ -12,7 +12,7 @@ function Search({ onSubmit }) {
 
   React.useEffect(() => {
     const values = JSON.parse(localStorage.getItem("searchField"));
-    if (values.searchKeywords) {
+    if (values) {
       inputRef.current.value = values.searchKeywords;
       localStorage.setItem("searchField", JSON.stringify(values.searchKeywords));
       setInputField({searchKeywords: values.searchKeywords});
