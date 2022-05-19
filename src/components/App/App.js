@@ -59,6 +59,10 @@ function App() {
   });
 
   React.useEffect(() => {
+    document.title = "Films Database"
+ }, []);
+
+  React.useEffect(() => {
     const values = JSON.parse(localStorage.getItem("searchField"));
     if (values) {
       setInputField({
