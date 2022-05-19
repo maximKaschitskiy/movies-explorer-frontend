@@ -1,18 +1,14 @@
 import React from 'react';
 import { useRef } from 'react';
 
-import "./FilterCheckbox.css";
+import "./FilterSavedMoviesCheckbox.css";
 
-function FilterCheckbox({ checkboxName, isFilterOn, setIsFilterOn }) {
+function FilterSavedMoviesCheckbox({ checkboxName, isFilterOn, setIsFilterOn }) {
 
   const checked = useRef();
 
   const handleChange = () => setIsFilterOn(checked.current.checked);
   
-  React.useEffect(() => {
-    localStorage.setItem("isFilterOn", isFilterOn);
-  }, [isFilterOn]);
-
   return (
     <div className="checkbox__wrapper">
       <label className="checkbox">
@@ -32,4 +28,4 @@ function FilterCheckbox({ checkboxName, isFilterOn, setIsFilterOn }) {
   );
 }
 
-export default FilterCheckbox;
+export default FilterSavedMoviesCheckbox;

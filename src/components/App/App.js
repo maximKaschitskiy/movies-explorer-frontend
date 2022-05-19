@@ -9,6 +9,7 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 import Profile from "../Profile/Profile";
@@ -21,7 +22,8 @@ import {
   loginFail,
   somethingWrong,
   registerFail,
-  registerSuccsess
+  registerSuccsess,
+  profileEditSuccess,
 } from "../../constants/errors";
 
 import {
@@ -31,12 +33,14 @@ import {
 } from "../../utils/searchFilter";
 
 import "./App.css";
+import PublicRoute from "../PublicRoute/PublicRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState();
   const [menuIsOpened, setMenuIsOpened] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isFilterOn, setIsFilterOn] = React.useState(false);
+  const [isSavedMoviesFilterOn, setIsSavedMoviesFilterOn] = React.useState(false);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
   const [filteredDurationMovies, setFilteredDurationMovies] = React.useState(
     []
@@ -50,6 +54,22 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [savedMoviesId, setSavedMoviesId] = React.useState([]);
   const [tooltipStatus, setTooltipStatus] = React.useState({});
+  const [inputField, setInputField] = React.useState({
+    searchKeywords: "",
+  });
+
+  React.useEffect(() => {
+    const values = JSON.parse(localStorage.getItem("searchField"));
+    if (values) {
+      setInputField({
+        searchKeywords: values.searchKeywords,
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("searchField", JSON.stringify(inputField));
+  }, [inputField]);
 
   const validateLoginForm = new FormValidator(
     formSelectorsObj,
@@ -169,8 +189,9 @@ function App() {
     mainApi
       .setUserInfo(event)
       .then((response) => {
-        console.log(response);
         setCurrentUser(response);
+        setTooltipStatus(profileEditSuccess);
+        setIsInfoTooltip(true);
       })
       .catch((err) => {
         console.log(err.status, err.statusText);
@@ -208,7 +229,7 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(err.status, err.statusText);
+          console.log(err);
         });
     } else {
       setLoggedIn(false);
@@ -260,19 +281,21 @@ function App() {
         })
         .then((data) => {
           const searchedMovies = handleFilter(data, event.searchKeywords);
-          const searchedMoviesWithDuration = handleDurationFilter(searchedMovies);
+          const searchedMoviesWithDuration =
+            handleDurationFilter(searchedMovies);
           setFilteredMovies(searchedMovies);
           setFilteredDurationMovies(searchedMoviesWithDuration);
           const searchedSavedMovies = handleFilter(
             savedMovies,
             event.searchKeywords
           );
-          const searchedSavedMoviesWithDuration = handleDurationFilter(searchedMovies);
+          const searchedSavedMoviesWithDuration =
+            handleDurationFilter(searchedMovies);
           setFilteredSavedMovies(searchedSavedMovies);
           savedDurationMovies(searchedSavedMoviesWithDuration);
         })
         .catch((err) => {
-          console.log(err.status, err.statusText);
+          console.log(err);
           setOnload(false);
         })
         .finally(() => {
@@ -322,6 +345,30 @@ function App() {
       .then((res) => {
         setIsEntranceFail(false);
         setTooltipStatus(registerSuccsess);
+        mainApi
+          .auth(event)
+          .then((response) => {
+            if (response.token) {
+              localStorage.setItem("jwt", response.token);
+              handleValidation(response.token);
+              setLoggedIn(true);
+              navigate("/movies");
+            } else {
+              return;
+            }
+          })
+          .catch((err) => {
+            if (err.status === 401) {
+              setTooltipStatus(loginFail);
+            } else {
+              setTooltipStatus(somethingWrong);
+            }
+            setIsEntranceFail(true);
+            setIsInfoTooltip(true);
+          })
+          .finally(() => {
+            setOnload(false);
+          });
       })
       .catch((err) => {
         console.log(err.status, err.statusText);
@@ -340,17 +387,16 @@ function App() {
 
   function handleLogOut() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("searchField");
+    localStorage.removeItem("isFilterOn");
+    localStorage.removeItem("movies");
+    localStorage.removeItem("savedMovies");
     setLoggedIn(false);
     navigate("/");
   }
 
   function closePopups() {
     setIsInfoTooltip(false);
-  }
-
-  function handleOnSuccess() {
-    navigate("/sign-in");
-    closePopups();
   }
 
   // чекбокс
@@ -375,61 +421,67 @@ function App() {
   }, [isFilterOn]);
 
   React.useEffect(() => {
+    if (location.pathname === "/saved-movies") {
+      setIsFilterOn(false);
+    }
+  }, [location.pathname]);
+
+  React.useEffect(() => {
     const values = JSON.parse(localStorage.getItem("isFilterOn"));
-    if (values) {
+    if (values && location.pathname === "/movies") {
       setIsFilterOn(values);
     }
-  }, []);
+  }, [location.pathname]);
 
   React.useEffect(() => {
-      const values = JSON.parse(localStorage.getItem("searchField"));
-      if (values) {
-        moviesApi
-          .getMovies()
-          .then((res) => {
-            setMovies(res);
-            localStorage.setItem("movies", JSON.stringify(res));
-            return res;
-          })
-          .then((data) => {
-            const result = handleFilter(data, values.searchKeywords);
-            const resultWithDuration = handleDurationFilter(result);
-            setFilteredMovies(result);
-            setFilteredDurationMovies(resultWithDuration);
-          })
-          .catch((err) => {
-            console.log(err.status, err.statusText);
-          });
-      }
-  }, [loggedIn]);
-
-  React.useEffect(() => {
-    if (loggedIn) {
-      const values = JSON.parse(localStorage.getItem("searchField"));
-      if (values) {
-        mainApi
-          .getSavedMovies()
-          .then((res) => {
-            setSavedMovies(res);
-            localStorage.setItem("savedMovies", JSON.stringify(res));
-            return res;
-          })
-          .then((data) => {
-            const searchedSavedMovies = handleFilter(
-              data,
-              values.searchKeywords
-            );
-            const searchedSavedMoviesWithDuration =
-              handleDurationFilter(searchedSavedMovies);
-            setFilteredSavedMovies(searchedSavedMovies);
-            setSavedDurationMovies(searchedSavedMoviesWithDuration);
-          })
-          .catch((err) => {
-            console.log(err.status, err.statusText);
-          });
-      }
+    if (location.pathname === "/movies") {
+      localStorage.setItem("isFilterOn", isFilterOn);
     }
+  }, [isFilterOn]);
+
+  React.useEffect(() => {
+    const values = JSON.parse(localStorage.getItem("searchField"));
+    let keyword = "";
+    if (values) {
+      keyword = values.searchKeywords;
+    }
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        setMovies(res);
+        localStorage.setItem("movies", JSON.stringify(res));
+        return res;
+      })
+      .then((data) => {
+        const result = handleFilter(data, keyword);
+        const resultWithDuration = handleDurationFilter(result);
+        setFilteredMovies(result);
+        setFilteredDurationMovies(resultWithDuration);
+      })
+      .catch((err) => {
+        console.log(err.status, err.statusText);
+      });
   }, [loggedIn]);
+
+  React.useEffect(() => {
+      mainApi
+        .getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+          localStorage.setItem("savedMovies", JSON.stringify(res));
+          return res;
+        })
+        .then((data) => {
+          const searchedSavedMovies = handleFilter(data, "");
+          const searchedSavedMoviesWithDuration =
+            handleDurationFilter(searchedSavedMovies);
+          setFilteredSavedMovies(searchedSavedMovies);
+          setSavedDurationMovies(searchedSavedMoviesWithDuration);
+        })
+        .catch((err) => {
+          console.log(err.status, err.statusText);
+        });
+  }, [loggedIn, location.pathname]);
 
   return (
     <React.StrictMode>
@@ -439,7 +491,6 @@ function App() {
             <InfoTooltip
               isOpen={isInfoTooltip}
               onClose={closePopups}
-              onSuccess={handleOnSuccess}
               tooltipStatus={tooltipStatus}
             />
             <Preloader isLoading={onLoad} />
@@ -447,11 +498,19 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
               <Route
                 path="/sign-up"
-                element={<Register onSubmit={handleRegisterSubmit} />}
+                element={
+                  <PublicRoute loggedIn={loggedIn}>
+                    <Register onSubmit={handleRegisterSubmit} />
+                  </PublicRoute>
+                }
               />
               <Route
                 path="/sign-in"
-                element={<Login onSubmit={handleLoginSubmit} />}
+                element={
+                  <PublicRoute loggedIn={loggedIn}>
+                    <Login onSubmit={handleLoginSubmit} />
+                  </PublicRoute>
+                }
               />
               <Route
                 path="/profile"
@@ -510,6 +569,7 @@ function App() {
                       handleMoreClick={handleMoreClick}
                       handleLikeClick={handleLikeMovie}
                       handleDeleteClick={handleDeleteMovie}
+                      input={[inputField, setInputField]}
                     />
                     <Footer />
                   </ProtectedRoute>
@@ -525,7 +585,7 @@ function App() {
                       openMenu={handleOpenMenu}
                       closeMenu={handleCloseMenu}
                     />
-                    <Movies
+                    <SavedMovies
                       onSubmit={handleSavedMoviesSearch}
                       visibleMovies={
                         isFilterOn
@@ -542,6 +602,7 @@ function App() {
                       handleMoreClick={handleMoreClick}
                       handleLikeClick={handleLikeMovie}
                       handleDeleteClick={handleDeleteMovie}
+                      input={[inputField, setInputField]}
                     />
                     <Footer />
                   </ProtectedRoute>

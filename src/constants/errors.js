@@ -22,6 +22,12 @@ const somethingWrong = {
     status: false
 };
 
+const profileEditSuccess = {
+    mainMessage: 'Профиль изменён',
+    altCaption: 'Успешно',
+    status: true
+};
+
 export {
-    loginFail, registerSuccsess, registerFail, somethingWrong
+    loginFail, registerSuccsess, registerFail, somethingWrong, profileEditSuccess
   };

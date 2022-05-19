@@ -1,31 +1,21 @@
 import React from "react";
 import { useRef } from "react";
 
-import "./Search.css";
+import "./SearchSavedMovies.css";
 
-function Search({ onSubmit }) {
+function SearchSavedMovies({ onSubmit, input }) {
   const inputRef = useRef();
 
-  const [inputField, setInputField] = React.useState({searchKeywords: ''});
   const [validTrue, setValidTrue] = React.useState(false);
   const [validMessage, setValidMessage] = React.useState("");
 
-  React.useEffect(() => {
-    const values = JSON.parse(localStorage.getItem("searchField"));
-    if (values) {
-      inputRef.current.value = values.searchKeywords;
-      localStorage.setItem("searchField", JSON.stringify(values.searchKeywords));
-      setInputField({searchKeywords: values.searchKeywords});
-    }
-  }, []);
+  const [inputField, setInputField] = input;
 
-  React.useEffect(() => {
-    localStorage.setItem("searchField", JSON.stringify(inputField));
-  }, [inputField]);
 
   const handleChange = (event) => {
     setInputField({ ...inputField, [event.target.name]: event.target.value });
     checkValidation();
+    localStorage.setItem("searchField", JSON.stringify(inputField));
   };
 
   const handleSubmit = (event) => {
@@ -85,4 +75,4 @@ function Search({ onSubmit }) {
   );
 }
 
-export default Search;
+export default SearchSavedMovies;

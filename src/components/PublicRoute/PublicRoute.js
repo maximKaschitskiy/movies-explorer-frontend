@@ -1,16 +1,16 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import CurrentUserContext from '../../contexts/CurrentUserContext';
+import Preloader from "../Preloader/Preloader";
 
-function PublicRoute({ children }) {
+function PublicRoute({ children, loggedIn }) {
 
-  const [currentUser] = React.useContext(CurrentUserContext);
-
-  if (!currentUser) {
-    return ( children ); 
-  } else { 
-    return ( <Navigate to="/" /> );
+  if (loggedIn === undefined) {
+    return <Preloader isLoading={true} />
   }
-};
+
+  return loggedIn
+    ? <Navigate to="/" replace />
+    : children ;
+}
 
 export default PublicRoute; 

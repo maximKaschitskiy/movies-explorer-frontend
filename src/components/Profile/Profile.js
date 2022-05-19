@@ -7,10 +7,9 @@ import Preloader from "../Preloader/Preloader";
 function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, onSubmit, onLoad, onLogout, onFail }) {
 
   const [currentUser] = React.useContext(CurrentUserContext);
-
   const [isEditing, setIsEditing] = useState(false);
-
   const [inputField, setInputField] = React.useState({});
+  const [changeFields, setChangeFields] = useState(true);
 
   React.useEffect(() => {
     if (onFail) {
@@ -27,6 +26,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, onSubmit, onLoad
 
   const handleChange = (event) => {
     setInputField({ ...inputField, [event.target.name]: event.target.value });
+    setChangeFields(false);
   };
 
   const handleSubmit = (event) => {
@@ -110,7 +110,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, onSubmit, onLoad
               </div>
             ) : (
               <div className="profile__form-actions-wrapper">
-                <input type="submit" className="profile__action-button profile__action-button_action_save" disabled={onLoad} value={"Сохранить"}></input>
+                <input type="submit" className="profile__action-button profile__action-button_action_save" disabled={onLoad || changeFields} value={"Сохранить"}></input>
               </div>
             )}
           </div>

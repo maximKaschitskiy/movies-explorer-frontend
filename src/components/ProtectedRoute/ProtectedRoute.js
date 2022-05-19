@@ -10,7 +10,7 @@ function ProtectedRoute({ children, loggedIn }) {
   
     return loggedIn
       ? children
-      : <Navigate to="/sign-in" replace />;
+      : <Navigate to="/" replace />;
   }
 
 export default ProtectedRoute; 

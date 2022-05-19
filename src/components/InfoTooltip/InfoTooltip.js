@@ -10,12 +10,12 @@ function InfoTooltip({isOpen, onClose, onSuccess, tooltipStatus}) {
   return (
   <>
     <section className={`popup-overlay ${isOpen ? "popup-overlay_active" : ""}`} onClick={
-      () => (tooltipStatus.status ? onSuccess() : onClose())
+      () => (onClose())
     }></section>
     <section className={`popup ${isOpen ? "popup_active" : ""}`}>
         <div className="popup__window">
         <button className="popup__close-button" type="button" onClick={
-           () => (tooltipStatus.status ? onSuccess() : onClose())
+           () => (onClose())
           }></button>
           <div className="popup__form">
             <img className="popup__icon popup__icon_state_success-message" src={ !tooltipStatus.status ? failIcon : succsessIcon } alt={ tooltipStatus.altCaption } />
