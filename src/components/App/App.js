@@ -40,7 +40,6 @@ function App() {
   const [menuIsOpened, setMenuIsOpened] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isFilterOn, setIsFilterOn] = React.useState(false);
-  const [isSavedMoviesFilterOn, setIsSavedMoviesFilterOn] = React.useState(false);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
   const [filteredDurationMovies, setFilteredDurationMovies] = React.useState(
     []
